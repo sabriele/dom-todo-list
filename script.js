@@ -1,55 +1,40 @@
-const tasks = ['buy milk', 'eat dinner', 'nail javascript', 'give feedback'];
-const allTasks = document.querySelector('#todo-list');
+const tasks = ["buy milk", "eat dinner", "nail javascript", "give feedback"];
 
-const removeButton = () => {
-  const button = document.createElement('button');
-  button.textContent = 'Remove';
-  return button;
+const allTasks = document.querySelector("#todo-list");
+const inputBox = document.querySelector("#input-box");
+const addButton = document.querySelector("#add-button");
+
+const handleSubmitTask = () => {
+  tasks.push(inputBox.value);
+  displayTasks(inputBox.value);
+  handleComplete();
 };
 
-const toggleDone = () => {
-  const task = document.querySelectorAll('li');
-  task.forEach((node) => {
-    node.addEventListener('click', () => {
-      node.classList.toggle('done');
+const handleComplete = () => {
+  const task = document.querySelectorAll(".task-details");
+  task.forEach(node => {
+    node.addEventListener("click", () => {
+      node.classList.toggle("done");
+      console.log("click");
     });
   });
 };
 
-const displayTasks = () => {
-  tasks.forEach((task) => {
-    const newTask = document.createElement('li');
-    newTask.textContent = task;
-    allTasks.appendChild(newTask);
-    toggleDone();
-    removeButton();
-  });
+const displayTasks = task => {
+  const taskRow = document.createElement("li");
+  const taskDetails = document.createElement("div");
+  const removeButton = document.createElement("button");
+  taskDetails.textContent = task;
+  taskDetails.classList.add("task-details");
+
+  taskRow.appendChild(taskDetails);
+  taskRow.appendChild(removeButton);
+  allTasks.appendChild(taskRow);
 };
 
-const addTask = () => {
-  const taskSubmit = document.querySelector('#submission');
-  const addButton = document.querySelector('#addButton');
-
-  addButton.addEventListener('click', () => {
-    const ul = document.querySelector('#todo-list');
-    while (ul.hasChildNodes()) {
-      ul.lastChild.remove();
-    }
-    tasks.push(taskSubmit.value);
-    displayTasks();
-  });
-
-  taskSubmit.addEventListener('keypress', (e) => {
-    const key = e.which || e.keyCode;
-    if (key === 13) {
-      const newTask = document.createElement('li');
-      newTask.textContent = taskSubmit.value;
-      allTasks.appendChild(newTask);
-      tasks.push(newTask.textContent);
-    }
-  });
-};
-
-displayTasks();
-addTask();
-toggleDone();
+tasks.forEach(displayTasks);
+handleComplete();
+addButton.addEventListener("click", () => handleSubmitTask());
+inputBox.addEventListener("keypress", e => {
+  if (e.key === "Enter") handleSubmitTask();
+});

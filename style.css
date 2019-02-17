@@ -23,6 +23,14 @@ ul li {
   padding: 1rem 0;
 }
 
+button:focus {
+  outline: 0;
+}
+
+#input-box {
+  width: 60%;
+}
+
 .form {
   text-align: center;
 }
@@ -31,6 +39,6 @@ ul li {
   text-decoration: line-through;
 }
 
-#submission {
-  width: 60%;
+.task-details {
+  display: inline;
 }
