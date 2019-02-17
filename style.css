@@ -42,3 +42,9 @@ button:focus {
 .task-details {
   display: inline;
 }
+
+.remove-button {
+  border: none;
+  padding: 0;
+  float: right;
+}
