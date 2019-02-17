@@ -7,17 +7,12 @@ const addButton = document.querySelector("#add-button");
 const handleSubmitTask = () => {
   tasks.push(inputBox.value);
   displayTasks(inputBox.value);
-  handleComplete();
-  handleRemoveTask();
+  inputBox.value = null;
 };
 
-const handleComplete = () => {
-  const task = document.querySelectorAll(".task-details");
-  task.forEach(node => {
-    node.addEventListener("click", () => {
-      node.classList.toggle("done");
-      console.log("click");
-    });
+const handleComplete = task => {
+  task.addEventListener("click", () => {
+    task.classList.toggle("done");
   });
 };
 
@@ -43,12 +38,15 @@ const displayTasks = task => {
   taskRow.appendChild(taskDetails);
   taskRow.appendChild(removeButton);
   allTasks.appendChild(taskRow);
+
+  handleComplete(taskDetails);
+  handleRemoveTask();
 };
 
 tasks.forEach(displayTasks);
-handleComplete();
-handleRemoveTask();
-addButton.addEventListener("click", () => handleSubmitTask());
+addButton.addEventListener("click", () => {
+  if (inputBox.value) handleSubmitTask();
+});
 inputBox.addEventListener("keypress", e => {
-  if (e.key === "Enter") handleSubmitTask();
+  if (e.key === "Enter" && inputBox.value) handleSubmitTask();
 });
